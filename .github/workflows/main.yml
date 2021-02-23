@@ -44,6 +44,6 @@ jobs:
           
           # Dokerfile directory.
           # For example, if you have a Dockerfile in the root of your project, leave it as follows:
-          dockerfile_directory: ./CS-460/mhcapstone/mhcapstone/Dockerfile
+          dockerfile_directory: ./CS-460/mhcapstone/mhcapstone/
           
 ### ⬆ IMPORTANT PART ⬆ ###
