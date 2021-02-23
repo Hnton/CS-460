@@ -21,3 +21,4 @@ COPY --from=build-env /app/out .
 # e.g. MyProject.dll
 # ENTRYPOINT [ "dotnet", "HerokuApp.dll" ]
 CMD ASPNETCORE_URLS=http://*:$PORT dotnet mhcapstone.dll
+# test
