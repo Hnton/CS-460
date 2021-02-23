@@ -18,5 +18,5 @@ jobs:
       run: |
         cd ./mhcapstone
         docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-        heroku container:push web -a $mhcapstonegithubactions
-        heroku container:release web -a $mhcapstonegithubactions
+        heroku container:push -a mhcapstonegithubactions web
+        heroku container:release -a mhcapstonegithubactions web
