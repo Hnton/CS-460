@@ -17,3 +17,6 @@ heroku container:push -a mhcapstone web
 heroku container:release -a mhcapstone web
 
 Write-Host "SUCCESSFULLY PUSHED TO HEROKU & GITHUB!"
+
+
+<#  & C:\Users\Mikael\Documents\GitHub\CS-460\mhcapstone\mhcapstone\Run.ps1 #>
