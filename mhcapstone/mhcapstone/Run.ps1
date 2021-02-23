@@ -2,12 +2,11 @@ Write-Host "Build and Push to Heroku"
 
 git add --all
 
-
 $mess = Read-Host 'Input Commit Message'
 
 git commit -m $mess
 
-git push origin m
+git push origin main
 
 heroku container:login
 
