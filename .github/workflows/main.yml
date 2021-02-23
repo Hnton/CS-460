@@ -1,22 +1,21 @@
-name: CI
+name: Push Container to Heroku
 
-on:
-  push:
-    branches:
-    - main
-    - release/*
+on: [push]
 
 jobs:
-  build_mhcapstone:
-    runs-on: ubuntu-16.04
+  build:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Build and deploy the Docker image
+    - name: Login to Heroku Container registry
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        APP_NAME: ${{ 'mhcapstonegithubactions' }}
-      run: |
-        cd ./mhcapstone
-        docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-        heroku container:push web -a $APP_NAME
-        heroku container:release web -a $APP_NAME
+      run: heroku container:login 
+    - name: Build and push
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a mhcapstonegithubactions web 
+    - name: Release
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a mhcapstonegithubactions web 
