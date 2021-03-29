@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using mhcapstone.Areas.Data;
+using mhcapstone.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +14,11 @@ namespace mhcapstone.Data
             : base(options)
         {
         }
+
+        public DbSet<User> User { get; set; }
+        public DbSet<Surveys> Survey { get; set; }
+        public DbSet<SurveyInfo> SurveyInfo { get; set; }
+
+
     }
 }
