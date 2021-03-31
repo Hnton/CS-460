@@ -10,14 +10,14 @@ using mhcapstone.Data;
 namespace mhcapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210317131645_inite")]
-    partial class inite
+    [Migration("20210331150345_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.12")
+                .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -46,6 +46,22 @@ namespace mhcapstone.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ADMIN",
+                            ConcurrencyStamp = "66e8cdf3-fe73-435a-a3f1-073f821c3b5b",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "USER",
+                            ConcurrencyStamp = "bb3a3eac-6eeb-4f2c-98c9-0d298ba69586",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -204,6 +220,13 @@ namespace mhcapstone.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "ADMIN",
+                            RoleId = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -234,11 +257,11 @@ namespace mhcapstone.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Questions")
+                    b.Property<string>("Answers")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("QuestionsType")
-                        .HasColumnType("bit");
+                    b.Property<string>("Questions")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SurveysID")
                         .HasColumnType("int");
@@ -299,6 +322,27 @@ namespace mhcapstone.Migrations
                     b.ToTable("Users","User");
 
                     b.HasDiscriminator().HasValue("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ADMIN",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e37f8318-c534-4c5d-83dc-c7bab9b2b36b",
+                            Email = "Admin@Develop.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN@DEVELOP.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d66856b8-2421-4e48-a4da-dfa567a69085",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin@develop.com",
+                            Active = true,
+                            BirthDate = new DateTime(2021, 3, 31, 11, 3, 45, 531, DateTimeKind.Local).AddTicks(6366),
+                            FirstName = "Admin",
+                            LastName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

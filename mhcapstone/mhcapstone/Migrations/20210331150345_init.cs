@@ -46,6 +46,7 @@ namespace mhcapstone.Migrations
                     Discriminator = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
+                    BirthDate = table.Column<DateTime>(nullable: true),
                     Active = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
@@ -191,7 +192,7 @@ namespace mhcapstone.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TimeStamp = table.Column<DateTime>(nullable: false),
                     Questions = table.Column<string>(nullable: true),
-                    QuestionsType = table.Column<bool>(nullable: false),
+                    Answers = table.Column<string>(nullable: true),
                     SurveysID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -205,6 +206,26 @@ namespace mhcapstone.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "ADMIN", "66e8cdf3-fe73-435a-a3f1-073f821c3b5b", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "USER", "bb3a3eac-6eeb-4f2c-98c9-0d298ba69586", "User", "USER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Active", "BirthDate", "FirstName", "LastName" },
+                values: new object[] { "ADMIN", 0, "e37f8318-c534-4c5d-83dc-c7bab9b2b36b", "User", "Admin@Develop.com", true, false, null, null, "ADMIN@DEVELOP.COM", "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==", null, false, "d66856b8-2421-4e48-a4da-dfa567a69085", false, "Admin@develop.com", true, new DateTime(2021, 3, 31, 11, 3, 45, 531, DateTimeKind.Local).AddTicks(6366), "Admin", "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "ADMIN", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

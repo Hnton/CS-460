@@ -10,8 +10,8 @@ using mhcapstone.Data;
 namespace mhcapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210322125018_change")]
-    partial class change
+    [Migration("20210331154622_adduser")]
+    partial class adduser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,22 @@ namespace mhcapstone.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ADMIN",
+                            ConcurrencyStamp = "1a886e4a-88ed-45bc-aee8-4e1d803969b6",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "USER",
+                            ConcurrencyStamp = "4787bcc5-7e9b-48cd-90fb-e5ba585d4aa0",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -204,6 +220,18 @@ namespace mhcapstone.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "ADMIN",
+                            RoleId = "ADMIN"
+                        },
+                        new
+                        {
+                            UserId = "USER",
+                            RoleId = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -299,6 +327,46 @@ namespace mhcapstone.Migrations
                     b.ToTable("Users","User");
 
                     b.HasDiscriminator().HasValue("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ADMIN",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "19c69bb7-8ea6-4466-88f7-a00d73d6b180",
+                            Email = "Admin@Develop.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN@DEVELOP.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "6d91c608-4db5-4935-9061-b28ec662fd51",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin@develop.com",
+                            Active = true,
+                            BirthDate = new DateTime(2021, 3, 31, 11, 46, 22, 145, DateTimeKind.Local).AddTicks(869),
+                            FirstName = "Admin",
+                            LastName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "USER",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "6ef07245-eba9-4ac7-a53d-68facd171f4b",
+                            Email = "user@Develop.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "USER@DEVELOP.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "018c259c-8c6f-43a6-a118-cd64ac0e85df",
+                            TwoFactorEnabled = false,
+                            UserName = "user@develop.com",
+                            Active = true,
+                            BirthDate = new DateTime(2021, 3, 31, 11, 46, 22, 146, DateTimeKind.Local).AddTicks(9597),
+                            FirstName = "user",
+                            LastName = "user"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
