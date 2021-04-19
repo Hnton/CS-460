@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Questions" class="control-label"></label>
-                <input asp-for="Questions" class="form-control" />
+                <input asp-for="Questions" readonly="readonly" class="form-control" />
                 <span asp-validation-for="Questions" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -22,15 +22,15 @@
                 <input asp-for="Answers" class="form-control" />
                 <span asp-validation-for="Answers" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SurveysID" class="control-label"></label>
-                <select asp-for="SurveysID" class="form-control" asp-items="ViewBag.SurveysID"></select>
-                <span asp-validation-for="SurveysID" class="text-danger"></span>
+            <div  class="form-group" >
+                @*<label asp-for="SurveysId" class="control-label"></label>*@
+                <input type="hidden" asp-for="SurveysId" class="form-control" />
+                <span asp-validation-for="SurveysId" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
-                <label asp-for="TimeStamp" class="control-label"></label>
-                <input asp-for="TimeStamp" class="form-control" />
+                @*<label asp-for="TimeStamp" class="control-label"></label>*@
+                <input type="hidden" asp-for="TimeStamp" class="form-control" />
                 <span asp-validation-for="TimeStamp" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,9 +40,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

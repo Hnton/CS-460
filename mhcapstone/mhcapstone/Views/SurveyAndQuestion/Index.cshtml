@@ -1,4 +1,4 @@
-﻿@model IEnumerable<mhcapstone.Models.SurveyInfo>
+﻿@model IEnumerable<mhcapstone.Models.ViewModels.SurveyAndQuestion>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Questions)
             </th>
             <th>
@@ -21,15 +24,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.SurveysId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Questions)
             </td>
@@ -39,15 +44,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SurveysId)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.TimeStamp)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.SurveysId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SurveysId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SurveysId">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

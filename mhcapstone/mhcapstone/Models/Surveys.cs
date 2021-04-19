@@ -24,7 +24,6 @@ namespace mhcapstone.Models
         // Later Feature
         // public List<Category> { get; set;} 
 
-        // All information inside of the survey
-        public SurveyInfo SurveyInfos { get; set; }
+        
     }
 }

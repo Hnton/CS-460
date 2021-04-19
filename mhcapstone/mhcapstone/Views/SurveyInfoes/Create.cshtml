@@ -17,30 +17,25 @@
                 <input asp-for="Questions" class="form-control" />
                 <span asp-validation-for="Questions" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Answers" class="control-label"></label>
                 <input asp-for="Answers" class="form-control" />
                 <span asp-validation-for="Answers" class="text-danger"></span>
+            </div>*@
+
+            <div class="form-group">
+                <input type="submit" value="Submit" formaction="@Url.Action("Create")" class="btn btn-primary" />
             </div>
             <div class="form-group">
-                <label asp-for="SurveysID" class="control-label"></label>
-                <select asp-for="SurveysID" class ="form-control" asp-items="ViewBag.SurveysID"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="TimeStamp" class="control-label"></label>
-                <input asp-for="TimeStamp" class="form-control" />
-                <span asp-validation-for="TimeStamp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Finished" formaction="@Url.Action("Index","Surveys")" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

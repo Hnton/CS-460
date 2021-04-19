@@ -88,6 +88,8 @@ namespace mhcapstone.Data
         public DbSet<User> User { get; set; }
         public DbSet<Surveys> Survey { get; set; }
         public DbSet<SurveyInfo> SurveyInfo { get; set; }
+        public DbSet<SurveyInfoTaken> SurveyInfoTaken { get; set; }
+
 
 
     }

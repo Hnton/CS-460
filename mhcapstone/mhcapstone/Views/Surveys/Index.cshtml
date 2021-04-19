@@ -4,50 +4,157 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Created Surveys</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.UserCount)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.TimeStamp)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+
+        @foreach (var item in Model.Where(a => a.UserID == (String)ViewData["userID"]))
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Id)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.UserCount)
+                </td>*@
+                <td>
+                    <a asp-controller="SurveyInfoes" asp-action="Questions" asp-route-id="@item.ID">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                </td>*@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                @*<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+            </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<h1>All Surveys</h1>
+
+<table class="table">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeStamp)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.UserCount)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.TimeStamp)
+            </th>*@
+            <th></th>
         </tr>
-}
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Where(a => a.UserID != (String)ViewData["userID"]))
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Id)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.UserCount)
+                </td>*@
+                <td>
+                    <a asp-controller="SurveyInfoes" asp-action="Questions" asp-route-id="@item.ID">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                </td>*@
+                @*<td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>*@
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<h1>Taken Surveys(WORKING ON)</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.UserCount)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.TimeStamp)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+         @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Id)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.UserCount)
+                </td>*@
+                <td>
+                    <a asp-controller="SurveyInfoes" asp-action="QuestionsAnswered" asp-route-id="@item.ID">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a>
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                </td>*@
+                @*<td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>*@
+            </tr>
+        }
+
     </tbody>
 </table>

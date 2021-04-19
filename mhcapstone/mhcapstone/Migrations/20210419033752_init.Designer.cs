@@ -10,7 +10,7 @@ using mhcapstone.Data;
 namespace mhcapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210331150345_init")]
+    [Migration("20210419033752_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,14 +51,14 @@ namespace mhcapstone.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "66e8cdf3-fe73-435a-a3f1-073f821c3b5b",
+                            ConcurrencyStamp = "0c3b25bd-f295-412f-9537-2dbdd73a7d37",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "USER",
-                            ConcurrencyStamp = "bb3a3eac-6eeb-4f2c-98c9-0d298ba69586",
+                            ConcurrencyStamp = "bf19cac5-0bd5-4d5c-80a5-03ae67ff6ec6",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -186,12 +186,10 @@ namespace mhcapstone.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -226,6 +224,11 @@ namespace mhcapstone.Migrations
                         {
                             UserId = "ADMIN",
                             RoleId = "ADMIN"
+                        },
+                        new
+                        {
+                            UserId = "USER",
+                            RoleId = "USER"
                         });
                 });
 
@@ -235,12 +238,10 @@ namespace mhcapstone.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -263,18 +264,49 @@ namespace mhcapstone.Migrations
                     b.Property<string>("Questions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SurveysID")
+                    b.Property<int>("SurveysId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("ID");
 
-                    b.HasIndex("SurveysID")
-                        .IsUnique();
+                    b.HasIndex("UserID");
 
                     b.ToTable("SurveyInfo","User");
+                });
+
+            modelBuilder.Entity("mhcapstone.Models.SurveyInfoTaken", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Answers")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Questions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SurveysId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("SurveyInfoTaken","User");
                 });
 
             modelBuilder.Entity("mhcapstone.Models.Surveys", b =>
@@ -328,20 +360,39 @@ namespace mhcapstone.Migrations
                         {
                             Id = "ADMIN",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e37f8318-c534-4c5d-83dc-c7bab9b2b36b",
+                            ConcurrencyStamp = "1a9b0fb9-f1ae-45a5-87e9-49ade42720fd",
                             Email = "Admin@Develop.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@DEVELOP.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d66856b8-2421-4e48-a4da-dfa567a69085",
+                            SecurityStamp = "bc856464-a4cf-4fcd-9c89-31c03d5923e9",
                             TwoFactorEnabled = false,
                             UserName = "Admin@develop.com",
                             Active = true,
-                            BirthDate = new DateTime(2021, 3, 31, 11, 3, 45, 531, DateTimeKind.Local).AddTicks(6366),
+                            BirthDate = new DateTime(2021, 4, 18, 23, 37, 52, 371, DateTimeKind.Local).AddTicks(5077),
                             FirstName = "Admin",
                             LastName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "USER",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "dd6b965c-1318-45c3-8da0-8d89748e1d8a",
+                            Email = "user@Develop.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "USER@DEVELOP.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ebdb038b-bf7e-4dc0-8381-813ecec4e98e",
+                            TwoFactorEnabled = false,
+                            UserName = "user@develop.com",
+                            Active = true,
+                            BirthDate = new DateTime(2021, 4, 18, 23, 37, 52, 373, DateTimeKind.Local).AddTicks(3564),
+                            FirstName = "user",
+                            LastName = "user"
                         });
                 });
 
@@ -398,11 +449,16 @@ namespace mhcapstone.Migrations
 
             modelBuilder.Entity("mhcapstone.Models.SurveyInfo", b =>
                 {
-                    b.HasOne("mhcapstone.Models.Surveys", "Surveys")
-                        .WithOne("SurveyInfos")
-                        .HasForeignKey("mhcapstone.Models.SurveyInfo", "SurveysID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("mhcapstone.Areas.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
+                });
+
+            modelBuilder.Entity("mhcapstone.Models.SurveyInfoTaken", b =>
+                {
+                    b.HasOne("mhcapstone.Areas.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("mhcapstone.Models.Surveys", b =>

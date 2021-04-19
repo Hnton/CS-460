@@ -100,8 +100,8 @@ namespace mhcapstone.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -145,8 +145,8 @@ namespace mhcapstone.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -158,6 +158,54 @@ namespace mhcapstone.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SurveyInfo",
+                schema: "User",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    UserID = table.Column<string>(nullable: true),
+                    Questions = table.Column<string>(nullable: true),
+                    Answers = table.Column<string>(nullable: true),
+                    SurveysId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SurveyInfo", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_SurveyInfo_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SurveyInfoTaken",
+                schema: "User",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    UserID = table.Column<string>(nullable: true),
+                    Questions = table.Column<string>(nullable: true),
+                    Answers = table.Column<string>(nullable: true),
+                    SurveysId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SurveyInfoTaken", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_SurveyInfoTaken_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,49 +231,33 @@ namespace mhcapstone.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "SurveyInfo",
-                schema: "User",
-                columns: table => new
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
                 {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TimeStamp = table.Column<DateTime>(nullable: false),
-                    Questions = table.Column<string>(nullable: true),
-                    Answers = table.Column<string>(nullable: true),
-                    SurveysID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SurveyInfo", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_SurveyInfo_Surveys_SurveysID",
-                        column: x => x.SurveysID,
-                        principalSchema: "User",
-                        principalTable: "Surveys",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                    { "ADMIN", "0c3b25bd-f295-412f-9537-2dbdd73a7d37", "Admin", "ADMIN" },
+                    { "USER", "bf19cac5-0bd5-4d5c-80a5-03ae67ff6ec6", "User", "USER" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ADMIN", "66e8cdf3-fe73-435a-a3f1-073f821c3b5b", "Admin", "ADMIN" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "USER", "bb3a3eac-6eeb-4f2c-98c9-0d298ba69586", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Active", "BirthDate", "FirstName", "LastName" },
-                values: new object[] { "ADMIN", 0, "e37f8318-c534-4c5d-83dc-c7bab9b2b36b", "User", "Admin@Develop.com", true, false, null, null, "ADMIN@DEVELOP.COM", "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==", null, false, "d66856b8-2421-4e48-a4da-dfa567a69085", false, "Admin@develop.com", true, new DateTime(2021, 3, 31, 11, 3, 45, 531, DateTimeKind.Local).AddTicks(6366), "Admin", "Admin" });
+                values: new object[,]
+                {
+                    { "ADMIN", 0, "1a9b0fb9-f1ae-45a5-87e9-49ade42720fd", "User", "Admin@Develop.com", true, false, null, null, "ADMIN@DEVELOP.COM", "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==", null, false, "bc856464-a4cf-4fcd-9c89-31c03d5923e9", false, "Admin@develop.com", true, new DateTime(2021, 4, 18, 23, 37, 52, 371, DateTimeKind.Local).AddTicks(5077), "Admin", "Admin" },
+                    { "USER", 0, "dd6b965c-1318-45c3-8da0-8d89748e1d8a", "User", "user@Develop.com", true, false, null, null, "USER@DEVELOP.COM", "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==", null, false, "ebdb038b-bf7e-4dc0-8381-813ecec4e98e", false, "user@develop.com", true, new DateTime(2021, 4, 18, 23, 37, 52, 373, DateTimeKind.Local).AddTicks(3564), "user", "user" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
                 values: new object[] { "ADMIN", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "USER", "USER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -267,11 +299,16 @@ namespace mhcapstone.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SurveyInfo_SurveysID",
+                name: "IX_SurveyInfo_UserID",
                 schema: "User",
                 table: "SurveyInfo",
-                column: "SurveysID",
-                unique: true);
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SurveyInfoTaken_UserID",
+                schema: "User",
+                table: "SurveyInfoTaken",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Surveys_UserID",
@@ -302,11 +339,15 @@ namespace mhcapstone.Migrations
                 schema: "User");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "SurveyInfoTaken",
+                schema: "User");
 
             migrationBuilder.DropTable(
                 name: "Surveys",
                 schema: "User");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -1,25 +1,25 @@
 ﻿using mhcapstone.Areas.Data;
-using mhcapstone.Models.Base;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mhcapstone.Models
+namespace mhcapstone.Models.ViewModels
 {
-    [Table("SurveyInfo", Schema = "User")]
-    public class SurveyInfo : EntityBase
+    public class SurveyAndQuestion
     {
+        public String Title { get; set; }
+
         public string UserID { get; set; }
 
         [ForeignKey(nameof(UserID))]
         public User User { get; set; }
+
         public String Questions { get; set; }
 
         public String Answers { get; set; }
-        
+
         public int SurveysId { get; set; }
 
     }

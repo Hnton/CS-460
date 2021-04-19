@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using mhcapstone.Data;
 using mhcapstone.Models;
+using Microsoft.AspNet.Identity;
+
 
 namespace mhcapstone.Controllers
 {
@@ -22,6 +24,10 @@ namespace mhcapstone.Controllers
         // GET: Surveys
         public async Task<IActionResult> Index()
         {
+            var userID = User.Identity.GetUserId();
+            ViewData["userID"] = userID;
+
+        
             var applicationDbContext = _context.Survey.Include(s => s.User);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -48,7 +54,7 @@ namespace mhcapstone.Controllers
         // GET: Surveys/Create
         public IActionResult Create()
         {
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Id");
+
             return View();
         }
 
@@ -61,11 +67,13 @@ namespace mhcapstone.Controllers
         {
             if (ModelState.IsValid)
             {
+                surveys.UserID = User.Identity.GetUserId();
+                surveys.UserCount = 0;
+                surveys.TimeStamp = DateTime.Now;
                 _context.Add(surveys);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "SurveyInfoes");
             }
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Id", surveys.UserID);
             return View(surveys);
         }
 
@@ -82,7 +90,6 @@ namespace mhcapstone.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Id", surveys.UserID);
             return View(surveys);
         }
 
@@ -93,6 +100,11 @@ namespace mhcapstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("UserID,UserCount,Title,ID,TimeStamp")] Surveys surveys)
         {
+            surveys.UserID = User.Identity.GetUserId();
+            surveys.UserCount = 0;
+            surveys.TimeStamp = DateTime.Now;
+
+
             if (id != surveys.ID)
             {
                 return NotFound();

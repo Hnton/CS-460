@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using mhcapstone.Data;
 using mhcapstone.Models;
+using Microsoft.AspNet.Identity;
 
 namespace mhcapstone.Controllers
 {
@@ -19,11 +20,57 @@ namespace mhcapstone.Controllers
             _context = context;
         }
 
+
+        // GET: SurveyInfoes/Details/5
+        public async Task<IActionResult> Questions(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var surveyQuestions = await _context.SurveyInfo
+                .FirstOrDefaultAsync(m => m.SurveysId == id);
+
+            var userID = (String)User.Identity.GetUserId(); 
+
+            var groupedQuestions = _context.SurveyInfo.Where(c => (c.SurveysId == surveyQuestions.SurveysId)).ToList();
+
+            if (surveyQuestions == null)
+            {
+                return NotFound();
+            }
+
+            return View(groupedQuestions);
+        }
+
+        public async Task<IActionResult> QuestionsAnswered(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var surveyQuestions = await _context.SurveyInfoTaken
+                .FirstOrDefaultAsync(m => m.SurveysId == id);
+
+            var userID = (String)User.Identity.GetUserId();
+
+            var groupedQuestions = _context.SurveyInfoTaken.Where(c => (c.SurveysId == surveyQuestions.SurveysId)).Where(c => (c.UserID == userID)).ToList();
+
+            if (surveyQuestions == null)
+            {
+                return NotFound();
+            }
+
+            return View(groupedQuestions);
+        }
+
+
         // GET: SurveyInfoes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.SurveyInfo.Include(s => s.Surveys);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.SurveyInfo.ToListAsync());
         }
 
         // GET: SurveyInfoes/Details/5
@@ -35,7 +82,6 @@ namespace mhcapstone.Controllers
             }
 
             var surveyInfo = await _context.SurveyInfo
-                .Include(s => s.Surveys)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (surveyInfo == null)
             {
@@ -48,7 +94,6 @@ namespace mhcapstone.Controllers
         // GET: SurveyInfoes/Create
         public IActionResult Create()
         {
-            ViewData["SurveysID"] = new SelectList(_context.Survey, "ID", "ID");
             return View();
         }
 
@@ -57,15 +102,19 @@ namespace mhcapstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Questions,Answers,SurveysID,ID,TimeStamp")] SurveyInfo surveyInfo)
+        public async Task<IActionResult> Create([Bind("Questions,Answers,SurveysId,ID,TimeStamp, UserID")] SurveyInfo surveyInfo)
         {
+            surveyInfo.SurveysId = _context.Survey.Max(i => i.ID);
+            surveyInfo.TimeStamp = DateTime.Now;
             if (ModelState.IsValid)
             {
+                surveyInfo.UserID = User.Identity.GetUserId();
                 _context.Add(surveyInfo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create","SurveyInfoes");
+
             }
-            ViewData["SurveysID"] = new SelectList(_context.Survey, "ID", "ID", surveyInfo.SurveysID);
             return View(surveyInfo);
         }
 
@@ -82,7 +131,6 @@ namespace mhcapstone.Controllers
             {
                 return NotFound();
             }
-            ViewData["SurveysID"] = new SelectList(_context.Survey, "ID", "ID", surveyInfo.SurveysID);
             return View(surveyInfo);
         }
 
@@ -91,8 +139,9 @@ namespace mhcapstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Questions,Answers,SurveysID,ID,TimeStamp")] SurveyInfo surveyInfo)
+        public async Task<IActionResult> Edit(int id, [Bind("Questions,Answers,SurveysId,ID,TimeStamp")] SurveyInfo surveyInfo)
         {
+            surveyInfo.TimeStamp = DateTime.Now;
             if (id != surveyInfo.ID)
             {
                 return NotFound();
@@ -102,6 +151,17 @@ namespace mhcapstone.Controllers
             {
                 try
                 {
+                    SurveyInfoTaken surveyInfoTaken = new SurveyInfoTaken {
+
+                        Questions = surveyInfo.Questions,
+                        Answers = surveyInfo.Answers,
+                        SurveysId = surveyInfo.SurveysId,
+                        UserID = User.Identity.GetUserId(),
+
+                    };
+                    _context.Add(surveyInfoTaken);
+                    _context.SaveChanges();
+                    surveyInfo.Answers = null;
                     _context.Update(surveyInfo);
                     await _context.SaveChangesAsync();
                 }
@@ -116,9 +176,8 @@ namespace mhcapstone.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Questions", "SurveyInfoes", new { id = surveyInfo.SurveysId });
             }
-            ViewData["SurveysID"] = new SelectList(_context.Survey, "ID", "ID", surveyInfo.SurveysID);
             return View(surveyInfo);
         }
 
@@ -131,7 +190,6 @@ namespace mhcapstone.Controllers
             }
 
             var surveyInfo = await _context.SurveyInfo
-                .Include(s => s.Surveys)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (surveyInfo == null)
             {

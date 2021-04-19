@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace mhcapstone.Models
 {
-    [Table("SurveyInfo", Schema = "User")]
-    public class SurveyInfo : EntityBase
+    [Table("SurveyInfoTaken", Schema = "User")]
+    public class SurveyInfoTaken : EntityBase
     {
         public string UserID { get; set; }
 
