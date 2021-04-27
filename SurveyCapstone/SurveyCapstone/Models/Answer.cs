@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SurveyCapstone.Areas.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,6 +12,11 @@ namespace SurveyCapstone.Models
     {
         [Key]
         public int Id { get; set; }
+
+        public string UserID { get; set; }
+
+        [ForeignKey(nameof(UserID))]
+        public Users User { get; set; }
 
         public int ResponseId { get; set; }
 

@@ -2,47 +2,48 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SurveyCapstone.Data;
 
 namespace SurveyCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210427163748_init")]
+    [Migration("20210427183358_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.13")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
 
@@ -50,14 +51,14 @@ namespace SurveyCapstone.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "cc812703-afe9-4ce7-bf38-d931a40400c3",
+                            ConcurrencyStamp = "bdc5cac7-e55b-4802-a015-1efa7dc89563",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "USER",
-                            ConcurrencyStamp = "f8e40667-3574-494d-b9f5-f56b61957d0e",
+                            ConcurrencyStamp = "82e27272-8b95-41a0-a2da-63f031d81018",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -67,18 +68,18 @@ namespace SurveyCapstone.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -90,57 +91,57 @@ namespace SurveyCapstone.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -150,7 +151,8 @@ namespace SurveyCapstone.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
 
@@ -161,18 +163,18 @@ namespace SurveyCapstone.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -184,17 +186,17 @@ namespace SurveyCapstone.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -206,10 +208,10 @@ namespace SurveyCapstone.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -233,16 +235,16 @@ namespace SurveyCapstone.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -253,23 +255,26 @@ namespace SurveyCapstone.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuestionId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<int?>("QuestionId1")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<int>("ResponseId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -279,50 +284,120 @@ namespace SurveyCapstone.Migrations
 
                     b.HasIndex("ResponseId");
 
+                    b.HasIndex("UserID");
+
                     b.ToTable("Answers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 10000,
+                            QuestionId = 10000,
+                            ResponseId = 10000,
+                            UserID = "USER",
+                            Value = "Test Answer #1"
+                        },
+                        new
+                        {
+                            Id = 10001,
+                            QuestionId = 10000,
+                            ResponseId = 10000,
+                            UserID = "USER",
+                            Value = "Test Answer #2"
+                        },
+                        new
+                        {
+                            Id = 10002,
+                            QuestionId = 10000,
+                            ResponseId = 10000,
+                            UserID = "USER",
+                            Value = "Test Answer #3"
+                        },
+                        new
+                        {
+                            Id = 10003,
+                            QuestionId = 10000,
+                            ResponseId = 10000,
+                            UserID = "USER",
+                            Value = "Test Answer #4"
+                        });
                 });
 
             modelBuilder.Entity("SurveyCapstone.Models.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("SurveyId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SurveyId");
 
                     b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 10000,
+                            CreatedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(2172),
+                            ModifiedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(2465),
+                            SurveyId = 10000,
+                            Title = "Test Question #1"
+                        },
+                        new
+                        {
+                            Id = 10001,
+                            CreatedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(2915),
+                            ModifiedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(2930),
+                            SurveyId = 10000,
+                            Title = "Test Question #2"
+                        },
+                        new
+                        {
+                            Id = 10002,
+                            CreatedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(2964),
+                            ModifiedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(2968),
+                            SurveyId = 10000,
+                            Title = "Test Question #3"
+                        },
+                        new
+                        {
+                            Id = 10003,
+                            CreatedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(2986),
+                            ModifiedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(2990),
+                            SurveyId = 10000,
+                            Title = "Test Question #4"
+                        });
                 });
 
             modelBuilder.Entity("SurveyCapstone.Models.Response", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("SurveyId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("UserID")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -331,32 +406,51 @@ namespace SurveyCapstone.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Responses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 10000,
+                            CreatedOn = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(4078),
+                            SurveyId = 10000,
+                            UserID = "USER"
+                        });
                 });
 
             modelBuilder.Entity("SurveyCapstone.Models.Survey", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserID")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserID");
 
                     b.ToTable("Surveys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 10000,
+                            EndDate = new DateTime(2021, 4, 27, 14, 33, 58, 115, DateTimeKind.Local).AddTicks(582),
+                            Name = "Test Survey 1",
+                            StartDate = new DateTime(2021, 4, 27, 14, 33, 58, 113, DateTimeKind.Local).AddTicks(2650),
+                            UserID = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("SurveyCapstone.Areas.Data.Users", b =>
@@ -364,10 +458,10 @@ namespace SurveyCapstone.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Users");
 
@@ -376,14 +470,14 @@ namespace SurveyCapstone.Migrations
                         {
                             Id = "ADMIN",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e89bde77-fe95-4120-ae34-785c09666a78",
+                            ConcurrencyStamp = "cb0fb080-4dd5-43e2-854c-1c820cd4a168",
                             Email = "Admin@Develop.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@DEVELOP.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8dd9ebd6-db97-48f4-addf-34f3a0df8da7",
+                            SecurityStamp = "a17dbaa3-a7dc-4497-a2df-98bb745f6c9e",
                             TwoFactorEnabled = false,
                             UserName = "Admin@develop.com",
                             FirstName = "Admin",
@@ -393,14 +487,14 @@ namespace SurveyCapstone.Migrations
                         {
                             Id = "USER",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b43796d2-f2da-4751-aa03-9e3d63aa0dda",
+                            ConcurrencyStamp = "3f09d2f0-7210-4e66-bd00-4895416ea701",
                             Email = "user@Develop.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "USER@DEVELOP.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "55b14a73-8f14-405e-9e1c-c3f31f5143b9",
+                            SecurityStamp = "fcd3ea76-c383-453a-baa8-9c703b236196",
                             TwoFactorEnabled = false,
                             UserName = "user@develop.com",
                             FirstName = "user",
@@ -476,6 +570,10 @@ namespace SurveyCapstone.Migrations
                         .HasForeignKey("ResponseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SurveyCapstone.Areas.Data.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("SurveyCapstone.Models.Question", b =>

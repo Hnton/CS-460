@@ -30,29 +30,32 @@
     <tbody>
         @foreach (var item in Model.Where(a=>a.UserID == (String)ViewData["userID"]))
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.UserName)
-                </td>
-                <td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            
+            <td>
+                <a asp-controller="Questions" asp-action="Index" asp-route-id="@item.Id">
                     @Html.DisplayFor(modelItem => item.Name)
-                </td>
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            @if (item.UserID == (String)ViewData["userID"])
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    
+                    
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                @if (item.UserID == (String)ViewData["userID"])
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                }
+            }
 
-            </tr>
+        </tr>
         }
     </tbody>
 </table>

@@ -20,9 +20,10 @@ namespace SurveyCapstone.Controllers
         }
 
         // GET: Questions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            return View(await _context.Questions.ToListAsync());
+           var i =  _context.Questions.Where(x => x.SurveyId == id);
+            return View(await i.ToListAsync());
         }
 
         // GET: Questions/Details/5

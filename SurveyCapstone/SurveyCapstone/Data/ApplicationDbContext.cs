@@ -26,7 +26,7 @@ namespace SurveyCapstone.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             var PasswordHash = new PasswordHasher();
-
+            Random random = new Random();
 
             builder.Entity<IdentityRole>().HasData(
 
@@ -85,6 +85,103 @@ namespace SurveyCapstone.Data
                 UserId = "USER"
             });
 
+
+            var survey1 = new Survey
+            {
+                Name = "Test Survey 1",
+                Id = 10000,
+                UserID = "ADMIN",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,           
+            };
+
+            builder.Entity<Survey>().HasData(survey1);
+
+            var question1_1 = new Question
+            {
+                Id = 10000,
+                SurveyId = 10000,
+                Title = "Test Question #1",
+                CreatedOn = DateTime.Now,
+                ModifiedOn =DateTime.Now
+            };
+            builder.Entity<Question>().HasData(question1_1);
+            var question1_2 = new Question
+            {
+                Id = 10001,
+                SurveyId = 10000,
+                Title = "Test Question #2",
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now
+            };
+            builder.Entity<Question>().HasData(question1_2);
+            var question1_3 = new Question
+            {
+                Id = 10002,                
+                SurveyId = 10000,
+                Title = "Test Question #3",
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now
+            };
+            builder.Entity<Question>().HasData(question1_3);
+            var question1_4 = new Question
+            {
+                Id = 10003,
+                SurveyId = 10000,
+                Title = "Test Question #4",
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now
+            };
+            builder.Entity<Question>().HasData(question1_4);
+
+            var response1 = new Response
+            {
+                Id = 10000,
+                SurveyId = 10000,
+                UserID = "USER",
+                CreatedOn = DateTime.Now,              
+            };
+            builder.Entity<Response>().HasData(response1);
+
+            var answer1 = new Answer
+            {
+                UserID = "USER",
+                Id = 10000,
+                ResponseId = 10000,
+                QuestionId = 10000,
+                Value = "Test Answer #1",
+            };
+            builder.Entity<Answer>().HasData(answer1);
+
+            var answer2 = new Answer
+            {
+                UserID = "USER",
+                Id = 10001,
+                ResponseId = 10000,
+                QuestionId = 10000,
+                Value = "Test Answer #2",
+            };
+            builder.Entity<Answer>().HasData(answer2);
+
+            var answer3 = new Answer
+            {
+                UserID = "USER",
+                Id = 10002,
+                ResponseId = 10000,
+                QuestionId = 10000,
+                Value = "Test Answer #3",
+            };
+            builder.Entity<Answer>().HasData(answer3);
+
+            var answer4 = new Answer
+            {
+                UserID = "USER",
+                Id = 10003,
+                ResponseId = 10000,
+                QuestionId = 10000,
+                Value = "Test Answer #4",
+            };
+            builder.Entity<Answer>().HasData(answer4);
 
             builder.Entity<Answer>()
                 .HasOne(x => x.Question)

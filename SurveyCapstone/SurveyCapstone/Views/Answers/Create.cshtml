@@ -2,7 +2,12 @@
 
 @{
     ViewData["Title"] = "Create";
+    var a = ViewData["answer"];
+    var count = ViewData["count"];
 }
+
+<h3>answers : @a</h3>
+<h3> count @count</h3>
 
 <h1>Create</h1>
 
@@ -16,9 +21,9 @@
             <label asp-for="ResponseId" class="control-label"></label>
             <select asp-for="ResponseId" class ="form-control" asp-items="ViewBag.ResponseId"></select>
         </div>*@
-            <div class="form-group">
+            <div class="form-group" style="pointer-events:none">
                 <label asp-for="Question" class="control-label"></label>
-                <select asp-for="QuestionId" class="form-control" asp-items="ViewBag.QuestionId"></select>
+                <select   asp-for="QuestionId" class="form-control" asp-items="ViewBag.QuestionId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Value" class="control-label">Answer</label>
@@ -33,9 +38,9 @@
             <div class="form-group">
                 <input type="submit" value="Submit Question" class="btn btn-primary" />
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <input type="submit" value="Finished" formaction="@Url.Action("Index","Surveys")" class="btn btn-primary" />
-            </div>
+            </div>*@
         </form>
     </div>
 </div>

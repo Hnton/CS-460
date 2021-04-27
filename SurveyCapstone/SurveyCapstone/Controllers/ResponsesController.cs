@@ -52,6 +52,7 @@ namespace SurveyCapstone.Controllers
         // GET: Responses/Create
         public IActionResult Create(int id)
         {
+            ViewData["param"] = _context.Answers.Where(z => z.ResponseId == id).Where(c=>c.UserID == User.Identity.GetUserId()).Count();
             ViewData["SurveyId"] = new SelectList(_context.Surveys.Where(n=> n.Id == id), "Id", "Name");
             ViewData["UserID"] = new SelectList(_context.User, "Id", "Id");
             return View();
@@ -64,6 +65,7 @@ namespace SurveyCapstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int id,[Bind("Id,SurveyId,UserID,CreatedOn")] Response response)
         {
+
             if (ModelState.IsValid)
             {
                 response.CreatedOn = DateTime.Now;
@@ -73,6 +75,7 @@ namespace SurveyCapstone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Create","Answers", new { id = response.SurveyId });
             }
+            ViewData["param"] = _context.Answers.Where(z => z.ResponseId == id).Count();
             ViewData["SurveyId"] = new SelectList(_context.Surveys, "Id", "Name", response.SurveyId);
             ViewData["UserID"] = new SelectList(_context.User, "Id", "Id", response.UserID);
             return View(response);

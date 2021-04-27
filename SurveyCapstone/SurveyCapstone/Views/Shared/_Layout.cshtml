@@ -3,11 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - mhcapstone</title>
+    <title>MH Surveys</title>
+    <link rel="icon" href="@Url.Content("~/wwwwroot/favicon.ico")" />
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body style="background-color: lightgray">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -37,7 +39,7 @@
                             }
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Surveys" asp-action="Create">Create Survey</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Surveys" asp-action="Create">Create Surveys</a>
                             </li>
 
                             <li class="nav-item">
@@ -45,7 +47,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Responses" asp-action="Index">Taken Survey</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Responses" asp-action="Index">Taken Surveys</a>
                             </li>
 
 

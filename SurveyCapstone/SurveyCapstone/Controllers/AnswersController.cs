@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ namespace SurveyCapstone.Controllers
         // GET: Answers
         public async Task<IActionResult> Index(int id)
         {
-            var applicationDbContext = _context.Answers.Include(a => a.Question).Include(a => a.Response).Where(n=>n.ResponseId == id);
+            var applicationDbContext = _context.Answers.Include(a => a.Question).Include(a => a.Response).Where(n=>n.ResponseId == id).Where(s=>s.UserID == User.Identity.GetUserId());
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -50,10 +51,26 @@ namespace SurveyCapstone.Controllers
         public IActionResult Create(int id)
         {
 
+            var count = _context.Questions.Where(i => i.SurveyId == id).Count();
 
-            
+            var answer = _context.Answers.Where(i => i.UserID == User.Identity.GetUserId()).Where(i => i.ResponseId == id).Count();
+            ViewData["answer"] = answer;
+
+            ViewData["count"] = count;
+
+
             ViewData["ResponseId"] = new SelectList(_context.Responses, "Id", "Id");
-            ViewData["QuestionId"] = new SelectList(_context.Questions.Where(i => i.SurveyId == id), "Id", "Title" );
+
+            if(answer == count)
+            {
+                return RedirectToAction("SurveyLandingPage", "Extras");
+            }
+            else
+            {
+                ViewData["QuestionId"] = new SelectList(_context.Questions.Where(i => i.SurveyId == id), "Id", "Title").Skip(answer);
+            }
+
+           
             return View();
         }
 
@@ -63,13 +80,31 @@ namespace SurveyCapstone.Controllers
         [HttpPost]
         public ActionResult Create(int id, Answer model)
         {
+            model.UserID = User.Identity.GetUserId();
             model.ResponseId = _context.Responses.Max(i => i.Id);
             model.Id = _context.Answers.Count() + 1;
             model.ResponseId = id;
             _context.Entry(model).State = EntityState.Added;
             _context.SaveChanges();
-            ViewData["ResponseId"] = new SelectList(_context.Responses, "Id", "Id", model.ResponseId);
-            ViewData["QuestionId"] = new SelectList(_context.Questions.Where(i => i.SurveyId == id), "Id", "Title", model.QuestionId);
+            var count = _context.Questions.Where(i => i.SurveyId == id).Count();
+
+            var answer = _context.Answers.Where(i => i.UserID == User.Identity.GetUserId()).Select(i => i.ResponseId).Count();
+
+            ViewData["answer"] = answer;
+
+            ViewData["count"] = count;
+
+
+            ViewData["ResponseId"] = new SelectList(_context.Responses, "Id", "Id");
+
+            if (answer == count)
+            {
+                return RedirectToAction("SurveyLandingPage", "Extras");
+            }
+            else
+            {
+                ViewData["QuestionId"] = new SelectList(_context.Questions.Where(i => i.SurveyId == id), "Id", "Title").Skip(answer);
+            }
             return RedirectToAction("Create", "Answers", new  { id = id});
         }
 
