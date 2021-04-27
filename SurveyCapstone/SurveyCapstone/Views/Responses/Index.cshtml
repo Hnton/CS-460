@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SurveyCapstone.Models.Response>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Survey.Name)
+            </th>
+            <th>
+                Taken On
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Where(n => n.UserID == (String)ViewData["userID"])) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Survey.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                <a asp-controller="Answers" asp-action="Index" asp-route-id="@item.SurveyId">Answers</a> 
+                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

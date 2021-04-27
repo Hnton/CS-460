@@ -24,26 +24,13 @@
     ViewBag.Title = "Index";
 }
 <br />
-<div id="text-container">
-    <h2>Admin Page</h2>
-
-    <div class="row">
-        @*<div class="column">
-            <h4>Roles</h4>
-            <li>@Html.ActionLink("Add Roles", "Index", "Role", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        </div>*@
-
-        <div class="column">
-
-            <h4>User</h4>
+<div id="text-container" class="text-center">
+    <div>
+        <div >
+            <h4>Edit/Add Users</h4>
 
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register New User</a>
-            <li>@Html.ActionLink("List All Users", "ListUsers", "Admin", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        </div>
-
-        <div class=" column">
-            <h5>Send survey to all users to be able to take</h5>
-
+            @Html.ActionLink("List All Users", "ListUsers", "Admin", routeValues: null, htmlAttributes: new { id = "registerLink" })
         </div>
     </div>
 </div>

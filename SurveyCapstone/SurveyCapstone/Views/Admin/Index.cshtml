@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+    <style>
+        .column {
+            float: left;
+            padding-left: 5%;
+            width: 33%;
+        }
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<div id="text-container" class="text-center">
+    <div>
+        <div>
+            <h4>Edit/Add Users</h4>
+
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register New User</a>
+            @Html.ActionLink("List All Users", "ListUsers", "Admin", routeValues: null, htmlAttributes: new { id = "registerLink" })
+        </div>
+    </div>
+</div>

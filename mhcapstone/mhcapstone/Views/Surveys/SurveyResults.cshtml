@@ -1,0 +1,46 @@
+﻿@model IEnumerable<mhcapstone.Models.SurveyInfoTaken>
+
+@{
+    ViewData["Title"] = "SurveyResults";
+}
+
+<h1>Survey Results</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Email)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.SurveysId)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.SurveysId)
+
+            </td>
+            <td>
+            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+        </td>
+            
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+

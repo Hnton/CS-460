@@ -49,14 +49,14 @@ namespace mhcapstone.Migrations
                         new
                         {
                             Id = "ADMIN",
-                            ConcurrencyStamp = "0c3b25bd-f295-412f-9537-2dbdd73a7d37",
+                            ConcurrencyStamp = "11e4f255-a800-4fd9-b368-afeef8e884a9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "USER",
-                            ConcurrencyStamp = "bf19cac5-0bd5-4d5c-80a5-03ae67ff6ec6",
+                            ConcurrencyStamp = "f0cf4607-d019-4272-8ba3-8b62b3aa598e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -358,18 +358,18 @@ namespace mhcapstone.Migrations
                         {
                             Id = "ADMIN",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1a9b0fb9-f1ae-45a5-87e9-49ade42720fd",
+                            ConcurrencyStamp = "03e53c4e-0857-484e-a11c-7149d03b29e6",
                             Email = "Admin@Develop.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@DEVELOP.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc856464-a4cf-4fcd-9c89-31c03d5923e9",
+                            SecurityStamp = "6ff4093d-d96c-4439-aa21-8c6e8d94cb3f",
                             TwoFactorEnabled = false,
                             UserName = "Admin@develop.com",
                             Active = true,
-                            BirthDate = new DateTime(2021, 4, 18, 23, 37, 52, 371, DateTimeKind.Local).AddTicks(5077),
+                            BirthDate = new DateTime(2021, 4, 25, 21, 41, 6, 991, DateTimeKind.Local).AddTicks(1463),
                             FirstName = "Admin",
                             LastName = "Admin"
                         },
@@ -377,18 +377,18 @@ namespace mhcapstone.Migrations
                         {
                             Id = "USER",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dd6b965c-1318-45c3-8da0-8d89748e1d8a",
+                            ConcurrencyStamp = "12c63d23-5d10-4a79-9569-d8c398447d69",
                             Email = "user@Develop.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "USER@DEVELOP.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ebdb038b-bf7e-4dc0-8381-813ecec4e98e",
+                            SecurityStamp = "f0e7a4af-c77e-40cb-b98c-33cf3858e2da",
                             TwoFactorEnabled = false,
                             UserName = "user@develop.com",
                             Active = true,
-                            BirthDate = new DateTime(2021, 4, 18, 23, 37, 52, 373, DateTimeKind.Local).AddTicks(3564),
+                            BirthDate = new DateTime(2021, 4, 25, 21, 41, 6, 993, DateTimeKind.Local).AddTicks(948),
                             FirstName = "user",
                             LastName = "user"
                         });

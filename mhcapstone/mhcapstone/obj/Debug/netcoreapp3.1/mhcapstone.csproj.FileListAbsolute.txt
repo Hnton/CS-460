@@ -243,3 +243,4 @@ C:\Users\Mikael\Documents\GitHub\CS-460\mhcapstone\mhcapstone\obj\Debug\netcorea
 C:\Users\Mikael\Documents\GitHub\CS-460\mhcapstone\mhcapstone\obj\Debug\netcoreapp3.1\mhcapstone.genruntimeconfig.cache
 C:\Users\Mikael\Documents\GitHub\CS-460\mhcapstone\mhcapstone\obj\Debug\netcoreapp3.1\Razor\Views\SurveyInfoes\QuestionsAnswered.cshtml.g.cs
 C:\Users\Mikael\Documents\GitHub\CS-460\mhcapstone\mhcapstone\obj\Debug\netcoreapp3.1\mhcapstone.csprojAssemblyReference.cache
+C:\Users\Mikael\Documents\GitHub\CS-460\mhcapstone\mhcapstone\obj\Debug\netcoreapp3.1\Razor\Views\Surveys\SurveyResults.cshtml.g.cs

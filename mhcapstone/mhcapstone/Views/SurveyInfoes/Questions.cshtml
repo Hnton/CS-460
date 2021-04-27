@@ -16,9 +16,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Questions)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.Answers)
-                </th>
+                </th>*@
                 @*<th>
                     @Html.DisplayNameFor(model => model.SurveysId)
                 </th>
@@ -35,9 +35,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Questions)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.Answers)
-                    </td>
+                    </td>*@
                     @*<td>
                         @Html.DisplayFor(modelItem => item.SurveysId)
                     </td>
@@ -54,7 +54,7 @@
         </tbody>
     </table>
 
-    <a asp-controller="Surveys" asp-action="Index">Submit</a>
+    <a asp-controller="Surveys" asp-action="Index">Done</a>
 
 
 

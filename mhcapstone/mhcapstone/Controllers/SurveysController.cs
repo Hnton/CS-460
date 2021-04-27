@@ -32,6 +32,22 @@ namespace mhcapstone.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+
+        // GET: Surveys
+        public async Task<IActionResult> SurveyResults(int? id)
+        {
+            var userID = User.Identity.GetUserId();
+            ViewData["userID"] = userID;
+
+            var res = (from b in _context.SurveyInfoTaken group b by b.UserID into groups select groups.OrderBy(p => p.SurveysId == id).First());
+
+
+            var applicationDbContext = _context.SurveyInfoTaken.Include(m => m.User).Where(m => m.SurveysId == id);
+
+            return View(applicationDbContext);
+        }
+
+
         // GET: Surveys/Details/5
         public async Task<IActionResult> Details(int? id)
         {
