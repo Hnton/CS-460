@@ -27,27 +27,27 @@ namespace SurveyCapstone
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddDefaultUI()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
-
-            // FOR HEROKU DATABASE
             //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseNpgsql(
+            //    options.UseSqlServer(
             //        Configuration.GetConnectionString("DefaultConnection")));
+
             //services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-            //                    .AddDefaultUI()
-            //                    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //                    .AddDefaultTokenProviders();
+            //    .AddDefaultUI()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
             //services.AddControllersWithViews();
             //services.AddRazorPages();
+
+            //FOR HEROKU DATABASE
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                                .AddDefaultUI()
+                                .AddEntityFrameworkStores<ApplicationDbContext>()
+                                .AddDefaultTokenProviders();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

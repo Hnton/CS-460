@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace SurveyCapstone.Migrations
 {
@@ -53,7 +54,8 @@ namespace SurveyCapstone.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +75,8 @@ namespace SurveyCapstone.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -93,8 +96,8 @@ namespace SurveyCapstone.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -138,8 +141,8 @@ namespace SurveyCapstone.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -157,7 +160,8 @@ namespace SurveyCapstone.Migrations
                 name: "Surveys",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserID = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: false),
@@ -178,7 +182,8 @@ namespace SurveyCapstone.Migrations
                 name: "Questions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SurveyId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
@@ -199,7 +204,8 @@ namespace SurveyCapstone.Migrations
                 name: "Responses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SurveyId = table.Column<int>(nullable: false),
                     UserID = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false)
@@ -225,7 +231,8 @@ namespace SurveyCapstone.Migrations
                 name: "Answers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ResponseId = table.Column<int>(nullable: false),
                     QuestionId = table.Column<int>(nullable: false),
                     Value = table.Column<string>(nullable: true),
@@ -260,8 +267,8 @@ namespace SurveyCapstone.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ADMIN", "b9550120-bddf-4476-804e-072a23256e1a", "Admin", "ADMIN" },
-                    { "USER", "0cecccfd-0568-438d-8043-52b9919ba36e", "User", "USER" }
+                    { "ADMIN", "cc812703-afe9-4ce7-bf38-d931a40400c3", "Admin", "ADMIN" },
+                    { "USER", "f8e40667-3574-494d-b9f5-f56b61957d0e", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -269,19 +276,18 @@ namespace SurveyCapstone.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "FirstName", "LastName" },
                 values: new object[,]
                 {
-                    { "ADMIN", 0, "3c640632-4043-43f6-9eb4-5860268a9563", "Users", "Admin@Develop.com", true, false, null, null, "ADMIN@DEVELOP.COM", "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==", null, false, "f6c56cfa-6562-4adf-a4ee-a5a4c9229c0e", false, "Admin@develop.com", "Admin", "Admin" },
-                    { "USER", 0, "576bbf7f-f338-482d-b493-27093ebbd258", "Users", "user@Develop.com", true, false, null, null, "USER@DEVELOP.COM", "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==", null, false, "bbfdbf67-49f7-4a9c-87f8-ca2af5a0a920", false, "user@develop.com", "user", "user" }
+                    { "ADMIN", 0, "e89bde77-fe95-4120-ae34-785c09666a78", "Users", "Admin@Develop.com", true, false, null, null, "ADMIN@DEVELOP.COM", "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==", null, false, "8dd9ebd6-db97-48f4-addf-34f3a0df8da7", false, "Admin@develop.com", "Admin", "Admin" },
+                    { "USER", 0, "b43796d2-f2da-4751-aa03-9e3d63aa0dda", "Users", "user@Develop.com", true, false, null, null, "USER@DEVELOP.COM", "AQAAAAEAACcQAAAAEE6fNGBLk0gWXtI+YF/euDFjEP3ASy0lEumjpTNbqgowNOzt9/dY3UByIFgSIFf1bA==", null, false, "55b14a73-8f14-405e-9e1c-c3f31f5143b9", false, "user@develop.com", "user", "user" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "ADMIN", "ADMIN" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "USER", "USER" });
+                values: new object[,]
+                {
+                    { "ADMIN", "ADMIN" },
+                    { "USER", "USER" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",
@@ -307,8 +313,7 @@ namespace SurveyCapstone.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -334,8 +339,7 @@ namespace SurveyCapstone.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_SurveyId",
