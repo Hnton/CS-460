@@ -246,3 +246,5 @@ C:\Users\Mikael\Documents\GitHub\CS-460\SurveyCapstone\SurveyCapstone\obj\Debug\
 C:\Users\Mikael\Documents\GitHub\CS-460\SurveyCapstone\SurveyCapstone\bin\Debug\netcoreapp3.1\Npgsql.dll
 C:\Users\Mikael\Documents\GitHub\CS-460\SurveyCapstone\SurveyCapstone\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Mikael\Documents\GitHub\CS-460\SurveyCapstone\SurveyCapstone\obj\Debug\netcoreapp3.1\Razor\Views\Extras\SurveyLandingPage.cshtml.g.cs
+C:\Users\Mikael\Documents\GitHub\CS-460\SurveyCapstone\SurveyCapstone\obj\Debug\netcoreapp3.1\Razor\Views\Responses\Results.cshtml.g.cs
+C:\Users\Mikael\Documents\GitHub\CS-460\SurveyCapstone\SurveyCapstone\obj\Debug\netcoreapp3.1\Razor\Views\Answers\Results.cshtml.g.cs

@@ -27,6 +27,12 @@ namespace SurveyCapstone.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> Results(int id, string user)
+        {
+            var applicationDbContext = _context.Answers.Include(a => a.Question).Include(a => a.Response).Include(u => u.User).Where(n => n.ResponseId == id).Where(x => x.UserID == user);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Answers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
